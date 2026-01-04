@@ -4,6 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/nghiacollab/ecommerce/types"
+	"github.com/nghiacollab/ecommerce/utils"
 )
 
 type Handler struct{}
@@ -19,4 +21,10 @@ func (h *Handler) RegisterRoutes(router *mux.Router) {
 
 func (h *Handler) handleLogin(w http.ResponseWriter, r *http.Request) {}
 
-func (h *Handler) handleRegister(w http.ResponseWriter, r *http.Request) {}
+func (h *Handler) handleRegister(w http.ResponseWriter, r *http.Request) {
+	var payload types.RegisterUserPayload
+	if err := utils.ParseJson(r, payload); err != nil {
+		utils.WriteError(w, http.StatusBadRequest, err)
+	}
+
+}
